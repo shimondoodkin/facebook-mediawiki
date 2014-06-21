@@ -170,6 +170,8 @@ It looks like you\'ve just disconnected your account from Facebook.
 We\'ve kept all of your history, edit points and achievements intact, so don\'t worry!
 
 You can use the same username and password as you did before you connected.',
+	'facebook-youcanto' => 'You can too:',
+	'facebook-loginwith' => 'login with facebook',
 );
 
 /**
@@ -186,7 +188,9 @@ $messages['qqq'] = array(
 	'facebook-prefstext' => 'Facebook preferences tab text above the list of preferences',
 	'facebook-link-to-profile' => 'Appears next to the user\'s name in their Preferences page and this text is made into link to the profile of that user if they are connected.',
 	'facebook-connect-next' => 'This text appears on the button in the login-and-connect dialog.
-After a user enters their username/password, this will slide them over to the next screen which is the Facebook login button.'
+After a user enters their username/password, this will slide them over to the next screen which is the Facebook login button.',
+	'facebook-youcanto' => 'How the user can login, too.',
+	'facebook-loginwith' => 'login with facebook text for button',
 );
 
 /** Afrikaans (Afrikaans)
@@ -461,6 +465,8 @@ Bitte einen anderen auswählen.',
 	'facebook-link-to-profile' => 'Facebook-Profil',
 	'facebook-prefsheader' => "Einstellungen zu den Aktionen, die über den eigenen Facebook-Newsfeed ausgegeben werden sollen: <a id='facebookPushEventBar_show' href='#'>Einstellungen anzeigen</a> <a id='facebookPushEventBar_hide' href='#' style='display:none'>Einstellungen ausblenden</a>",
 	'facebook-prefs-can-be-updated' => 'Sie können jederzeit aktualisiert werden, indem man sie unter der Registerkarte „$1“ auf der Seite Einstellungen ändert.',
+	'facebook-youcanto' => 'Du kannst dich auch:',
+	'facebook-loginwith' => 'mit Facebook anmelden',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))

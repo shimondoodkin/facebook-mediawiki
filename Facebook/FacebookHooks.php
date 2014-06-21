@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@ class SpecialUserLoginToConnect extends SpecialRedirectToSpecial {
 
 /**
  * Class FacebookHooks
- * 
+ *
  * This class contains all the hooks used in this extension. HOOKS DO NOT NEED
  * TO BE EXPLICITLY ADDED TO $wgHooks. Simply write a public static function
  * with the same name as the hook that provokes it, place it inside this class
@@ -60,13 +60,13 @@ class FacebookHooks {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Checks the autopromote condition for a user.
 	 */
 	static function AutopromoteCondition( $cond_type, $args, $user, &$result ) {
 		global $wgFbUserRightsFromGroup;
-		
+
 		switch ( $cond_type ) {
 			case APCOND_FB_USER:
 				$ids = FacebookDB::getFacebookIDs($user);
@@ -90,20 +90,20 @@ class FacebookHooks {
 				}
 			// end switch
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Injects some important CSS and Javascript into the <head> of the page.
 	 */
 	public static function BeforePageDisplay( &$out, &$skin ) {
 		global $wgFbExtScript, $wgVersion, $wgJsMimeType, $wgStyleVersion;
-		
-		// Wikiaphone skin for mobile device doesn't need JS or CSS additions 
+
+		// Wikiaphone skin for mobile device doesn't need JS or CSS additions
 		if ( get_class( $skin ) === 'SkinWikiaphone' )
 			return true;
-		
+
 		// Add a Facebook logo to the class .mw-fblink
 		global $wgFbLogo;
 		$style = empty( $wgFbLogo ) ? '' : <<<STYLE
@@ -116,7 +116,7 @@ class FacebookHooks {
 
 STYLE;
 		$style .= '.fbInitialHidden {display:none;}'; // Forms on Special:Connect
-		
+
 		if ( version_compare( $wgVersion, '1.17', '>=' ) ) {
 			// Throw in a <div id="fb-root"> tag here.
 			// Facebook documentation says to include this <div> before loading
@@ -127,10 +127,10 @@ STYLE;
 			// dialog is shown, an almost certain scenario). In all other cases,
 			// the library creates its own <div> 10000px above the top of the page.
 			$out->prependHTML("\n<div id=\"fb-root\"></div>\n");
-			
+
 			$out->addInlineStyle( $style );
-			
-			// Use the ResourceLoader to add the JS SDK 
+
+			// Use the ResourceLoader to add the JS SDK
 			$out->addModules( 'ext.facebook.sdk' );
 		} else {
 			// Asynchronously load the Facebook JavaScript SDK before the page's content
@@ -146,7 +146,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 </script>' . "\n"
 				);
 			}
-			
+
 			// Include special JavaScript on Special:Connect/Debug
 			$isSpecialConnectDebug = false;
 			$title = $skin->getTitle();
@@ -160,7 +160,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 							$wgFbExtScript);
 				}
 			}
-			
+
 			if ( version_compare( $wgVersion, '1.16', '>=' ) ) {
 				// Include the common jQuery library
 				$out->includeJQuery();
@@ -186,10 +186,10 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				}
 			}
 		}
-		
+
 		return true;
 	} // BeforePageDisplay hook
-	
+
 	/**
 	 * Returns the URL to the Facebook JavaScript SDK. If $wgFbScript contains
 	 * a %LOCALE% token, it will be replaced with the current user's language.
@@ -198,7 +198,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 	 */
 	private static function getFbScript() {
 		global $wgFbScript, $wgLang, $wgFbAppId, $wgFbSocialPlugins;
-		
+
 		static $fbScript = ''; // In MW <= 1.17 this runs from two different hooks
 		if ( $fbScript === '' ) {
 			$fbScript = $wgFbScript;
@@ -211,14 +211,14 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				$fbScript = str_replace( FACEBOOK_LOCALE, $locale, $fbScript );
 				wfProfileOut( __METHOD__ . '::fb-locale-by-mediawiki-lang' );
 			}
-			
+
 			// Give Facebook some hints. Commented out because they don't affect anything...
 			#$fbScript .= '#appId=' . $wgFbAppId .
 			#             '&xfbml=' . (!empty( $wgFbSocialPlugins ) ? '1' : '0');
 		}
 		return $fbScript;
 	}
-	
+
 	/**
 	 * Register the <opengraph> tag with the parser.
 	 */
@@ -230,18 +230,18 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Fired when MediaWiki is updated (from the command line updater utility or,
 	 * if using version 1.17+, from the initial installer). This hook allows
 	 * Facebook to update the database with the required tables. Each table
 	 * listed below should have a corresponding schema file in the sql directory
 	 * for each supported database type.
-	 * 
+	 *
 	 * MYSQL ONLY: If $wgDBprefix is set, then the table 'user_fbconnect' will
 	 * be prefixed accordingly. Make sure that the .sql files are modified with
 	 * the database prefix beforehand.
-	 * 
+	 *
 	 * The $updater parameter was added in r71140 (after 1.16)
 	 * <http://svn.wikimedia.org/viewvc/mediawiki?view=revision&revision=71140>
 	 */
@@ -268,7 +268,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		// Do the updating
 		foreach ( $tables as $table ) {
-			
+
 			// GitHub pull request #4, https://github.com/garbear/facebook-mediawiki/pull/4
 			// Thanks to Varnent for triaging the bug and isolating the offending code.
 			// No thanks to $wgDBprefix.
@@ -278,7 +278,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				$table = $wgDBprefix . $table;
 			}
 			*/
-			
+
 			// Location of the table schema file
 			$schema = "$sql/$table.$ext";
 			// If we're using the new version of the LoadExtensionSchemaUpdates hook
@@ -293,7 +293,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	} // LoadExtensionSchemaUpdates hook
-	
+
 	/**
 	 * Adds several Facebook variables to the page:
 	 */
@@ -320,7 +320,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 			// account belongs to. The primary reason for this is so that if a
 			// user logs in to Facebook with a different account, we can show
 			// the "facebooklogoutandcontinue" form.
-			// 
+			//
 			// Previously, if the user was logged in and had a valid Facebook
 			// session, we would skip this step with the mentality that it was
 			// unnecessary as the JavaScript code would obviously already know
@@ -340,10 +340,10 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 			// this form is retrieved, the new session is synchronized to the
 			// server and the AJAX request is invalid because you can't merge
 			// an account that is already connected to a Facebook user.
-			// 
+			//
 			// In and of itself, we skip this extra check and always include
 			// the fbId variable.
-			// 
+			//
 			// There must be a prize for finding bugs like this one. Because
 			// seriously, I deserve it.
 			if ( count( $ids ) ) {
@@ -356,14 +356,14 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Backwards compatibility for MediaWiki < 1.17.
-	 * 
+	 *
 	 * This hook was added in MediaWiki 1.14. If we are not 1.14 or later, this
 	 * function is called from BeforePageDisplay via MGVS_hack() to retain
 	 * backward compatibility.
-	 * 
+	 *
 	 * And then this hook was deprecated in 1.17, so it calls the new hook.
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
@@ -372,7 +372,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 			self::ResourceLoaderGetConfigVars( $vars );
 			unset( $vars['fbScript'] ); // Made obsolete by ResourceLoader
 		}
-		
+
 		// We want fbAppAccessToken to be set here instead of loaded through
 		// ResourceLoader. I forget why this is the case, unfortunately.
 		global $wgFbAllowDebug;
@@ -387,10 +387,10 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Hack: Run MakeGlobalVariablesScript for backwards compatibility.
 	 * The MakeGlobalVariablesScript hook was added to MediaWiki 1.14 in revision 38397:
@@ -409,19 +409,19 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Add the Open Graph meta tags to the current page.
-	 * 
+	 *
 	 * This hook is used instead of BeforePageDisplay, (I quote from mediawiki.org,)
 	 * "to make it easier on parser caching."
 	 */
 	public static function ParserAfterTidy(&$parser, &$text) {
 		global $wgFbOpenGraph, $wgOut;
 		if ( !empty( $wgFbOpenGraph ) ) {
-			
+
 			$parser->disableCache();
-			
+
 			$object = FacebookOpenGraph::newObjectFromTitle( $parser->getTitle() );
 			if ( $object ) {
 				if ($object instanceof OpenGraphArticleObject && $object->needsDescription()) {
@@ -434,7 +434,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Installs a parser hook for every tag reported by FacebookXFBML::availableTags().
 	 * Accomplishes this by asking FacebookXFBML to create a hook function that then
@@ -455,14 +455,14 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Simple boolean test of whether the "Log in with Facebook" button should
 	 * be shown. This test is isolated in its own function so that the
 	 * PersonalUrls and MakeGlobalVariablesScript hooks can both use it. The
 	 * rationality behind this is that we only needs to pass the list of
 	 * Facebook permissions via JavaScript if the Login button is actually shown.
-	 * 
+	 *
 	 * For now, we always pass the permissions in the fbScope variable.
 	 */
 	private static function showLogin() {
@@ -472,14 +472,14 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		       !(empty( $wgFbAlwaysShowLogin ) ||
 		           ($id && in_array($id, FacebookDB::getFacebookIDs($wgUser))));
 	}
-	
+
 	/**
 	 * Modify the user's persinal toolbar (in the upper right).
 	 */
 	public static function PersonalUrls( &$personal_urls, &$title ) {
 		global $wgUser, $wgFbUseRealName, $wgFbDisableLogin;
 		//wfLoadExtensionMessages('Facebook'); // Deprecated since 1.16
-		
+
 		// Transmogrify usernames into real names
 		if ( $wgUser->isLoggedIn() && !empty( $wgFbUseRealName ) ) {
 			$fb_ids = FacebookDB::getFacebookIDs($wgUser);
@@ -497,7 +497,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				}
 			}
 		}
-		
+
 		// Render a Log in with Facebook button
 		if ( self::showLogin() ) {
 			if ( isset( $personal_urls['logout'] ) ) {
@@ -515,8 +515,8 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				$personal_urls['logout'] = $logout_item;
 			}
 		}
-		
-		// Remove other personal toolbar links 
+
+		// Remove other personal toolbar links
 		if ( !$wgUser->isLoggedIn() && !empty( $wgFbDisableLogin ) ) {
 			foreach (array('login', 'anonlogin') as $k) {
 				if (array_key_exists($k, $personal_urls)) {
@@ -524,21 +524,21 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				}
 			}
 		}
-		
+
 		return true;
 	} // PersonalUrls hook
-	
+
 	/**
 	 * Modify the preferences form. At the moment, we simply turn the user name
 	 * into a link to the user's facebook profile.
-	 * 
+	 *
 	 * TODO: This hook no longer seems to work...
 	 *
 	public static function RenderPreferencesForm( $form, $output ) {
 		global $facebook, $wgUser;
-		
+
 		$ids = FacebookDB::getFacebookIDs($wgUser);
-		
+
 		$fb_user = $facebook->getUser();
 		if( $fb_user && count($ids) > 0 && in_array( $fb_user, $ids )) {
 			$html = $output->getHTML();
@@ -563,10 +563,10 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	} // RenderPreferencesForm hook
-	
+
 	/**
 	 * Add several meta property namespace attributes to the <head> tag.
-	 * 
+	 *
 	 * This hook follows the steps outlined in the Open Graph Beta tutorial:
 	 * https://developers.facebook.com/docs/beta/opengraph/tutorial/
 	 */
@@ -587,14 +587,14 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 				$head .= ' article: http://ogp.me/ns/article#';
 			}
 			$head .= '">';
-			
+
 			$headElement = $tpl->data['headelement'];
 			$headElement = str_replace('<head>', $head, $headElement);
 			$tpl->set( 'headelement', $headElement );
 		}
 		return true;
 	}
-	
+
 	/**
 	 * This hook is unused.
 	 *
@@ -617,7 +617,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Show the real name of users on Special:ListUsers if $wgFbUseRealName is
 	 * true. The local database is queried first for two reasons: performance
@@ -661,7 +661,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Adds some info about the governing Facebook group to the header form of
 	 * Special:ListUsers.
@@ -669,10 +669,10 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 	// r274: Fix error with PHP 5.3 involving parameter references (thanks, PChott)
 	static function SpecialListusersHeaderForm( $pager, &$out ) {
 		global $wgFbUserRightsFromGroup, $facebook;
-		
+
 		if ( !empty( $wgFbUserRightsFromGroup ) ) {
 			// TODO: Do we need to verify the Facebook session here?
-			
+
 			$gid = $wgFbUserRightsFromGroup;
 			// Connect to the API and get some info about the group
 			try {
@@ -699,7 +699,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	} // SpecialListusersHeaderForm hook
-	
+
 	/**
 	 * Removes Special:UserLogin and Special:CreateAccount from the list of
 	 * special pages if $wgFbDisableLogin is set to true.
@@ -718,13 +718,13 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * HACK: Please someone fix me or explain why this is necessary!
-	 * 
+	 *
 	 * Unstub $wgUser to avoid race conditions and stop returning stupid false
 	 * negatives!
-	 * 
+	 *
 	 * This might be due to a bug in User::getRights() [called from
 	 * User::isAllowed('read'), called from Title::userCanRead()], where mRights
 	 * is retrieved from an uninitialized user. From my probing, it seems that
@@ -740,20 +740,20 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		$user->getId();
 		return true;
 	}
-	
+
 	/**
 	 * We need to override the password checking so that Facebook users can
 	 * reset their passwords and give themselves a valid password to log in
 	 * without Facebook. This only works if the user specifies a blank password
 	 * and hasn't already given themselves one.
-	 * 
+	 *
 	 * To that effect, you may want to modify the 'resetpass-wrong-oldpass' msg.
-	 * 
+	 *
 	 * Before version 1.14, MediaWiki used Special:Preferences to reset
 	 * passwords instead of Special:ChangePassword, so this hook won't get
 	 * called and Facebook users won't be able to give themselves a password
 	 * unless they request one over email.
-	 * 
+	 *
 	 * TODO: A potential security flaw is exposed for users who run untrusted
 	 * JavaScript code. Because no password exists, JavaScript could set a new
 	 * password without the user's knowledge. To guard against this, we need to
@@ -780,7 +780,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Removes the 'createaccount' right from all users if $wgFbDisableLogin is
 	 * enabled.
@@ -804,33 +804,33 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * If $wgFbDisableLogin is set, make sure the user gets logged out if their
 	 * Facebook session is destroyed.
-	 * 
+	 *
 	 * This hook was added in MediaWiki 1.14.
 	 */
 	static function UserLoadAfterLoadFromSession( $user ) {
 		global $wgFbDisableLogin;
-		
+
 		// Don't mess with authentication on Special:Connect
 		$title = $user->getSkin()->getTitle();
 		if ( !empty( $wgFbDisableLogin ) && $user->isLoggedIn() &&
 				$title instanceof Title && !$title->isSpecial('Connect') ) {
 			$fbUser = new FacebookUser();
-			
+
 			// If possible, force a preemptive ping to Facebook's servers. Otherwise, we
 			// must wait until the next page view to pick up the user's Facebook login status
 			#$fbUser->isLoggedIn($ping = true);
-			
+
 			if ( !$fbUser->isLoggedIn() || $user->getId() != $fbUser->getMWUser()->getId() ) {
 				$user->logout();
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Called when the user is logged out to log them out of Facebook as well.
 	 *
@@ -847,7 +847,7 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Create a disconnect button and other things in preferences.
 	 *
@@ -856,41 +856,41 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/Facebook/prefs.js?{$wgStyleVersion}\"></script>\n");
 		//wfLoadExtensionMessages('Facebook'); // Deprecated since 1.16
 		$prefsection = 'facebook-prefstext';
-		
+
 		$id = FacebookDB::getFacebookIDs($user, DB_MASTER);
 		if( count($id) > 0 ) {
 			$html = Xml::openElement("div",array("id" => "fbDisconnectLink" ));
 				$html .= wfMsg('facebook-disconnect-link');
 			$html .= Xml::closeElement( "div" );
-			
+
 			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectProgress" ));
 				$html .= wfMsg('facebook-disconnect-done');
 				$html .= Xml::openElement("img",array("id" => "fbDisconnectProgressImg", 'src' => $wgBlankImgUrl, "class" => "sprite progress" ),true);
 			$html .= Xml::closeElement( "div" );
-			
+
 			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectDone" ));
 				$html .= wfMsg('facebook-disconnect-info');
 			$html .= Xml::closeElement( "div" );
-			
+
 			$preferences['facebook-prefstext'] = array(
 				'label' => '',
 				'type' => 'info',
 				'section' => 'facebook-prefstext/facebook-event-prefstext',
 			);
-			
+
 			$preferences['tog-facebook-push-allow-never'] = array(
 				'name' => 'toggle',
 				'label-message' => 'facebook-push-allow-never',
 				'section' => 'facebook-prefstext/facebook-event-prefstext',
 			);
-			
+
 			$preferences['facebook-connect'] = array(
 				'help' => $html,
 				'label' => '',
 				'type' => 'info',
 				'section' => 'facebook-prefstext/facebook-event-prefstext',
 			);
-			
+
 		} else {
 			// User is a MediaWiki user but isn't connected yet
 			// Display a message and button to connect
@@ -908,4 +908,35 @@ $wgJsMimeType . '";js.src="' . self::getFbScript() .
 		return true;
 	} // initPreferencesExtensionForm hook
 	/**/
+	public static function UserLoginForm( &$template ) {
+		global $wgOut;
+		if ( FacebookHooks::showLogin() ) {
+			$wgOut->addHtml(
+				Html::openelement( 'div', array( 'style' => 'float:right;' ), null) .
+				Html::element( 'div', null, wfMessage( 'facebook-youcanto' ) )
+			);
+			$wgOut->addHtml( Html::openelement( 'li', array(
+					'id' => 'pt-facebook',
+					'style' => 'list-style:none;',
+				) ) .
+				Html::element( 'a' , array(
+						'href' => '#',
+						'class' => 'mw-facebook-logo mw-ui-button mw-ui-progressive mw-ui-big',
+					), wfMessage( 'facebook-loginwith' )
+				) .
+				Html::closeelement( 'li' )
+			);
+			$wgOut->addHtml(
+				/*Html::element( 'fb:login-button', array(
+							'show-faces' => 'true',
+							'size' => 'large',
+							'max-rows' => '1',
+							'scope' => 'email'
+						),
+					null
+				) .*/
+				Html::closeelement( 'div')
+			);
+		}
+	}
 }
