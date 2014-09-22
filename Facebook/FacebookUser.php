@@ -409,8 +409,10 @@ class FacebookUser {
 		// This is a custom version of similar code in SpecialUserLogin's LoginForm
 		// with differences due to the fact that this code doesn't require a password, etc.
 		global $wgExternalAuthType;
+		global $wgAuth;
 		if ( $wgExternalAuthType ) {
-			$user = ExternalUser::addUser( $user, $pass, $email, $realName );
+		     	$user = User::newFromName( $user, 'creatable' );
+			$wgAuth->addUser( $user, $pass, $email, $realName );
 			if ( is_object( $user ) ) {
 				$extUser = ExternalUser::newFromName( $username );
 				$extUser->linkToLocal( $user->getId() );
@@ -703,7 +705,7 @@ class FacebookUser {
 			return false;
 		}
 		
-		$mExtUser = ExternalUser::newFromName( $name );
+		$mExtUser = User::newFromName( $name );
 		if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 			return false;
 		} elseif ( 0 != $u->idForName( true ) ) {
