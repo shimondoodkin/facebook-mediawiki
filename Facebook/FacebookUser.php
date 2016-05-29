@@ -703,10 +703,9 @@ class FacebookUser {
 			return false;
 		}
 		
-		$mExtUser = ExternalUser::newFromName( $name );
-		if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-			return false;
-		} elseif ( 0 != $u->idForName( true ) ) {
+		$authPlugin = new AuthPlugin;
+		$mExtUser = $authPlugin->userExists( $name );
+		if ( $mExtUser ) {
 			return false;
 		}
 		return true;

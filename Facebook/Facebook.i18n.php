@@ -172,6 +172,8 @@ We\'ve kept all of your history, edit points and achievements intact, so don\'t 
 You can use the same username and password as you did before you connected.',
         'pref-facebook-update-on-login-fullname' => 'Update full name on login',
         'pref-facebook-update-on-login-gender' => 'Update gender on login',
+	'facebook-youcanto' => 'You can too:',
+	'facebook-loginwith' => 'login with facebook',
         'pref-facebook-update-on-login-nickname' => 'Update nickname on login',
         'pref-facebook-update-on-login-email' => 'Update E-Mail Adress on login',
         'pref-facebook-update-on-login-language' => 'Update language on login',
@@ -194,7 +196,9 @@ $messages['qqq'] = array(
 	'facebook-prefstext' => 'Facebook preferences tab text above the list of preferences',
 	'facebook-link-to-profile' => 'Appears next to the user\'s name in their Preferences page and this text is made into link to the profile of that user if they are connected.',
 	'facebook-connect-next' => 'This text appears on the button in the login-and-connect dialog.
-After a user enters their username/password, this will slide them over to the next screen which is the Facebook login button.'
+After a user enters their username/password, this will slide them over to the next screen which is the Facebook login button.',
+	'facebook-youcanto' => 'How the user can login, too.',
+	'facebook-loginwith' => 'login with facebook text for button',
 );
 
 /** Afrikaans (Afrikaans)
@@ -217,21 +221,21 @@ $messages['af'] = array(
 	'facebook-link-to-profile' => 'Facebook-profiel',
 );
 
-/** Aramaic (ÜÜªÜ¡ÜÜ)
+/** Aramaic (ª¡)
  * @author Basharh
  */
 $messages['arc'] = array(
-	'group-fb-groupie' => 'Ü—Ü•ÌˆÜ¡Ü Ü•ÜŸÜ¢Ü˜Ü«Ü¬Ü',
-	'group-fb-groupie-member' => 'Ü—Ü•Ü¡Ü Ü•ÜŸÜ¢Ü˜Ü«Ü¬Ü',
-	'grouppage-fb-groupie' => '{{ns:project}}:Ü—Ü•ÌˆÜ¡Ü Ü•ÜŸÜ¢Ü˜Ü«Ü¬Ü',
-	'facebook-invalid' => 'Ü“Ü’ÜÜ¬Ü Ü Ü Ü¬ÜªÜÜ¨Ü¬Ü',
-	'facebook-fullname' => 'Ü«Ü¡Ü Ü“Ü¡ÜÜªÜ',
-	'facebook-email' => 'Ü¦ÜªÜ«Ü“Ü¢Ü Ü•Ü’ÜÜ Ü•ÜªÜ ÜÜ Ü©Ü›ÜªÜ˜Ü¢ÜÜ',
-	'facebook-language' => 'Ü Ü«Ü¢Ü',
-	'facebook-choosefirst' => 'Ü«Ü¡Ü Ü©Ü•Ü¡ÜÜ Ü•ÜÜ ÜŸ($1)',
-	'facebook-choosefull' => 'Ü«Ü¡Ü Ü“Ü¡ÜÜªÜ Ü•ÜÜ ÜŸ($1)',
-	'facebook-chooseusername' => 'Ü«Ü¡Ü Ü•Ü¡Ü¦Ü ÜšÜ¢Ü:',
-	'facebook-choosepassword' => 'Ü¡Ü Ü¬Ü Ü•Ü¥Ü Ü Ü:',
+	'group-fb-groupie' => '—•Ìˆ¡ •Ÿ¢˜«¬',
+	'group-fb-groupie-member' => '—•¡ •Ÿ¢˜«¬',
+	'grouppage-fb-groupie' => '{{ns:project}}:—•Ìˆ¡ •Ÿ¢˜«¬',
+	'facebook-invalid' => '“’¬   ¬ª¨¬',
+	'facebook-fullname' => '«¡ “¡ª',
+	'facebook-email' => '¦ª«“¢ •’ •ª  ©›ª˜¢',
+	'facebook-language' => ' «¢',
+	'facebook-choosefirst' => '«¡ ©•¡ • Ÿ($1)',
+	'facebook-choosefull' => '«¡ “¡ª • Ÿ($1)',
+	'facebook-chooseusername' => '«¡ •¡¦ š¢:',
+	'facebook-choosepassword' => '¡ ¬ •¥  :',
 );
 
 /** Belarusian (TaraÅ¡kievica orthography) (Ð‘ÐµÐ»Ð°Ñ€ÑƒÑÐºÐ°Ñ (Ñ‚Ð°Ñ€Ð°ÑˆÐºÐµÐ²Ñ–Ñ†Ð°))
@@ -471,6 +475,8 @@ Bitte einen anderen auswÃ¤hlen.',
 	'facebook-prefs-can-be-updated' => 'Sie kÃ¶nnen jederzeit aktualisiert werden, indem man sie unter der Registerkarte â€ž$1â€œ auf der Seite Einstellungen Ã¤ndert.',
         'pref-facebook-update-on-login-fullname' => 'Abgleich des BÃ¼rgerlichen Namens beim Login',
         'pref-facebook-update-on-login-gender' => 'Abgleich Geschlechtes des beim Login',
+	'facebook-youcanto' => 'Du kannst dich auch:',
+	'facebook-loginwith' => 'mit Facebook anmelden',
         'pref-facebook-update-on-login-nickname' => 'Abgleich des Nickname beim Login',
         'pref-facebook-update-on-login-email' => 'Abgleich der E-Mail Adresse beim Login',
         'pref-facebook-update-on-login-language' => 'Abgleich der Spracheinstellungen beim Login',
